@@ -1,12 +1,32 @@
-{:builds
- {:dev  {:target :browser
-         :devtools {:loader-mode :default}
-         :output-dir "resources/public/electric_starter_app/js"
-         :asset-path "/js"
-         :modules {:main {:entries [dev] :init-fn dev/start!}}
-         :build-hooks [(hyperfiddle.electric.shadow-cljs.hooks/reload-clj)]}
-  :prod {:target :browser
-         :output-dir "resources/public/electric_starter_app/js"
-         :asset-path "/js"
-         :modules {:main {:entries [prod] :init-fn prod/start!}}
-         :module-hash-names true}}}
+{
+ :builds
+ ; https://shadow-cljs.github.io/docs/UsersGuide.html#_output_settings
+ ; :output-dir - The directory to use for all compiler output.
+ ; :asset-path - The relative path from web server’s root to the resources in :output-dir.
+ ; web server must serve resources/public as its root
+ {:app-dev  {:deps {:aliases [:app]}
+                 :target :browser
+                 :devtools {:loader-mode :default
+                            :repl-pprint true}
+                 :output-dir "resources/public/app/js"
+                 :asset-path "/app/js"
+                 :modules {:main {:entries [dev] :init-fn dev/start!}}
+                 :build-hooks [(hyperfiddle.electric.shadow-cljs.hooks/reload-clj)]}
+  :app-prod {:target :browser
+                 :output-dir "resources/public/app/js"
+                 :asset-path "/app/js"
+                 :modules {:main {:entries [prod] :init-fn prod/start!}}
+                 :module-hash-names true}
+  :admin-dev  {:deps {:aliases [:admin]}
+               :target :browser
+               :devtools {:loader-mode :default
+                          :repl-pprint true}
+               :output-dir "resources/public/admin/js"
+               :asset-path "/admin/js"
+               :modules {:main {:entries [dev] :init-fn dev/start!}}
+               :build-hooks [(hyperfiddle.electric.shadow-cljs.hooks/reload-clj)]}
+  :admin-prod {:target :browser
+               :output-dir "resources/public/admin/js"
+               :asset-path "/admin/js"
+               :modules {:main {:entries [prod] :init-fn prod/start!}}
+               :module-hash-names true}}}

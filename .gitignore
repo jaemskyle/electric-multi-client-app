@@ -2,14 +2,16 @@
 # git config --global core.excludesfile
 # git config --global core.excludesfile ~/.gitignore
 # see also: https://gist.github.com/subfuzion/db7f57fff2fb6998a16c
-.clj-kondo
+.*
+!.gitignore
+!.cljfmt.edn
+!.clj-kondo
 .clj-kondo/.cache
-.cpcache
-.lsp
-.nrepl-port
-.shadow-cljs
 node_modules
-/resources/public/electric_starter_app/js
+/resources/public/app/js
+/resources/public/admin/js
 /resources/electric-manifest.edn
 /target
 .DS_Store
+/data
+*.zip

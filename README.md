@@ -1,12 +1,21 @@
-# Electric Starter App
+# Electric multi-client App
 
-A minimal Electric Clojure app, and instructions on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
+A minimal Electric Clojure app based on [Electric Starter App](https://github.com/hyperfiddle/electric-starter-app) providing a server with **multiple independent clients**.
+
+Instructions are provided on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
+
+## Under Development!
+Major issues:
+
+* There are build problems, there are cross-dependencies in the src-client-app and src-client-admin manifests. They should be independent.
+* The two clients run in dev mode however because of the build problem they each start both client reactors but the wrong one fails.
+* Other builds aren't correct yet.
 
 ## Instructions
 
 Dev build:
 
-* Shell: `clj -A:dev -X dev/-main`, or repl: `(dev/-main)`
+* Shell: `clj -A:dev:app:admin -X dev/-main`, or repl: `(dev/-main)`
 * http://localhost:8080
 * Electric root function: [src/electric_starter_app/main.cljc](src/electric_starter_app/main.cljc)
 * Hot code reloading works: edit -> save -> see app reload in browser
