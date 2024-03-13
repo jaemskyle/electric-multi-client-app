@@ -54,7 +54,7 @@
       ;(wrap-dbg :electric-websocket-middleware-2)
       (wrap-params) ; 1. parse query params
       ;(wrap-dbg :electric-websocket-middleware-1);
-      (wrap-dbg-uri);
+      ;(wrap-dbg-uri);
       ))
 
 (defn get-modules [{:keys [asset-path manifest-path]}]
@@ -148,4 +148,5 @@ information."
                                             (add-gzip-handler! server))}
                            server-config))]
     (log/info "👉" (str "http://" host ":" (-> server (.getConnectors) first (.getPort))))
+    (log/info "👉" (str "http://" host ":" (-> server (.getConnectors) first (.getPort)) "/admin"))
     server))
