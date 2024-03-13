@@ -12,14 +12,9 @@
     "build-sw": "npx browserslist@latest --update-db && nbb ./build-service-worker.cljs"
   },
   "dependencies": {
-    "localforage": "^1.10.0",
-    "materialize": "^1.0.0",
-    "qrcode": "^1.5.3",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "glob": "^10.3.10",
-    "shadow-cljs": "^2.20.16",
-    "workbox-build": "^7.0.0"
+    "shadow-cljs": "^2.20.16"
   }
 }
