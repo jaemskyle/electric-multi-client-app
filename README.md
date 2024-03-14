@@ -23,7 +23,7 @@ Dev build:
 Prod build:
 
 ```shell
-clj -X:build:prod build-client
+clj -X:build:prod:app:admin build-client
 clj -M:prod -m prod
 ```
 

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "watch": "clj -A:dev:app:admin -X dev/-main",
-    "build-prod": "clj -X:build:prod:app build-client",
+    "build-prod": "clj -X:build:prod:app:admin build-client",
     "prod": "clj -M:prod -m prod",
     "deps": "clj -A:dev:app:admin -Stree",
     "build-uber-jar": "clj -X:build:prod uberjar :build/jar-name 'target/app.jar'",
