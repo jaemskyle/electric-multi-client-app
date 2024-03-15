@@ -10,12 +10,12 @@
                             :repl-pprint true}
                  :output-dir "resources/public/app/js"
                  :asset-path "/app/js"
-                 :modules {:main {:entries [dev] :init-fn dev/start!}}
+                 :modules {:main {:entries [app-dev] :init-fn app-dev/start!}}
                  :build-hooks [(hyperfiddle.electric.shadow-cljs.hooks/reload-clj)]}
   :app-prod {:target :browser
                  :output-dir "resources/public/app/js"
                  :asset-path "/app/js"
-                 :modules {:main {:entries [prod] :init-fn prod/start!}}
+                 :modules {:main {:entries [app-prod] :init-fn app-prod/start!}}
                  :module-hash-names true}
   :admin-dev  {:deps {:aliases [:admin]}
                :target :browser
@@ -23,10 +23,10 @@
                           :repl-pprint true}
                :output-dir "resources/public/admin/js"
                :asset-path "/admin/js"
-               :modules {:main {:entries [dev] :init-fn dev/start!}}
+               :modules {:main {:entries [admin-dev] :init-fn admin-dev/start!}}
                :build-hooks [(hyperfiddle.electric.shadow-cljs.hooks/reload-clj)]}
   :admin-prod {:target :browser
                :output-dir "resources/public/admin/js"
                :asset-path "/admin/js"
-               :modules {:main {:entries [prod] :init-fn prod/start!}}
+               :modules {:main {:entries [admin-prod] :init-fn admin-prod/start!}}
                :module-hash-names true}}}

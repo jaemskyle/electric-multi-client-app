@@ -5,39 +5,44 @@ A minimal Electric Clojure app based on [Electric Starter App](https://github.co
 Instructions are provided on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
 
 ## Under Development!
-Major issues:
-
-* There are build problems, there are cross-dependencies in the src-client-app and src-client-admin manifests. They should be independent.
-* The two clients run in dev mode however because of the build problem they each start both client reactors but the wrong one fails.
-* Other builds aren't correct yet.
+See section **STATUS** tags.
 
 ## Instructions
 
-Dev build:
+Dev build: **STATUS: functional**
 
-* Shell: `clj -A:dev:app:admin -X dev/-main`, or repl: `(dev/-main)`
+* Shell: `npm run watch` **or** `clj -A:dev:app:admin -X dev/-main`, **or** repl: `(dev/-main)`
 * http://localhost:8080
-* Electric root function: [src/electric_starter_app/main.cljc](src/electric_starter_app/main.cljc)
+* Electric root functions:
+  * [src-client-app/app/main.cljc](src-client-app/app/main.cljc)
+  * [src-admin-app/admin/main.cljc](src-admin-app/admin/main.cljc)
 * Hot code reloading works: edit -> save -> see app reload in browser
 
-Prod build:
+Prod build: **STATUS: functional**
+
+```shell
+npm run build-prod-client
+npm run build-prod-server
+```
+
+**or**
 
 ```shell
 clj -X:build:prod:app:admin build-client
-clj -M:prod -m prod
+clj -M:prod:app:admin -m server-prod
 ```
 
-Uberjar (optional):
+Uberjar (optional): **STATUS: under-development**
 ```
-clj -X:build:prod uberjar :build/jar-name "target/app.jar"
+clj -X:build:prod:app:admin uberjar :build/jar-name "target/app.jar"
 java -cp target/app.jar clojure.main -m prod
 ```
 
-Deployment example:
+Deployment example: **STATUS: under-development**
 - [Dockerfile](Dockerfile)
 - fly.io deployment through github actions: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) & [fly.toml](fly.toml)
 
-## Integrate it in an existing clojure app
+## Integrate it in an existing clojure app **STATUS: under-development**
 
 1. Look at [src-prod/prod.cljc](src-prod/prod.cljc). It contains:
     - server entrypoint

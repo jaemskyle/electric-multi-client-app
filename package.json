@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "watch": "clj -A:dev:app:admin -X dev/-main",
-    "build-prod": "clj -X:build:prod:app:admin build-client",
-    "prod": "clj -M:prod -m prod",
+    "watch": "clj -A:dev:app:admin -X server-dev/-main",
+    "build-prod-client": "clj -X:build:prod:app:admin build-client",
+    "build-prod-server": "clj -M:prod:app:admin -m server-prod",
     "deps": "clj -A:dev:app:admin -Stree",
     "build-uber-jar": "clj -X:build:prod uberjar :build/jar-name 'target/app.jar'",
-    "uber-jar": "java -cp target/app.jar clojure.main -m prod",
-    "build-sw": "npx browserslist@latest --update-db && nbb ./build-service-worker.cljs"
+    "uber-jar": "java -cp target/app.jar clojure.main -m prod"
   },
   "dependencies": {
     "react": "^18.2.0"

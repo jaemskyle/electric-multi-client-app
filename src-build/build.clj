@@ -65,6 +65,7 @@
              :basis     (b/create-basis {:project "deps.edn" :aliases aliases})})
     (log/info jar-name)))
 
-;; clj -X:build:prod build-client
+;; clj -X:build:prod:app:admin build-client
+;; clj -M:prod:app:admin -m server-prod
 ;; clj -X:build:prod uberjar :build/jar-name "app.jar"
 ;; java -cp app.jar clojure.main -m prod

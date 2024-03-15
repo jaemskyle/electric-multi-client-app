@@ -60,7 +60,9 @@
         (d/div
          (d/props {:class "mdl-card__actions mdl-card--border"
                    :style {:display :flex :align-items :center}})
-         (Button. "Add-name" {:On-click (e/fn [_] (events/On-add-person. @!data))
+         (Button. "Add-name" {:On-click (e/fn [_]
+                                          (events/On-add-person. @!data)
+                                          (swap! !data dissoc :person/first-name :person/last-name))
                               :disabled (not (and first-name last-name))})
          (d/br)
          (Button. "Dump-db" {:On-click events/On-dump-db})))))))
