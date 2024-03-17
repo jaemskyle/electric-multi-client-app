@@ -132,9 +132,10 @@ information."
         admin-middleware (middleware admin-config)
         router (ring/router
                 [["/" app-middleware]
-                 ["/app/js/*path" app-middleware]
+                 ["/app/*path" app-middleware]
                  ["/admin" admin-middleware]
-                 ["/admin/js/*path" app-middleware]])
+                 ["/admin/*path" admin-middleware]
+                 ])
         route-handler (ring/ring-handler
                        router
                        (fn [_request] (res/not-found nil)))
