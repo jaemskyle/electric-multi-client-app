@@ -55,7 +55,7 @@
   (when-not skip-client
     (build-client {:optimize optimize, :debug debug, :verbose verbose}))
 
-  (b/copy-dir {:target-dir class-dir :src-dirs ["src" "src-prod" "src-client-app" "src-client-admin" "resources"]})
+  (b/copy-dir {:target-dir class-dir :src-dirs ["src" "src-prod" "src-client-app" "src-client-admin" "resources" "node_modules"]})
   (let [jar-name (or (some-> jar-name str) ; override for Dockerfile builds to avoid needing to reconstruct the name
                      (format "target/electricfiddle-%s.jar" electric-user-version))
         aliases [:prod :app :admin]]
