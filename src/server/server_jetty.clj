@@ -2,6 +2,7 @@
   "Electric integrated into a sample ring + jetty app."
   (:require
    [clojure.edn :as edn]
+   [clojure.java.io :as io]
    [clojure.string :as str]
    [clojure.pprint :refer [pprint]]
    [clojure.tools.logging :as log]
@@ -13,8 +14,7 @@
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.resource :refer [wrap-resource]]
    [ring.util.response :as res]
-   [reitit.ring :as ring]
-   [lib.debug :refer [we wd]])
+   [reitit.ring :as ring])
   (:import
    (org.eclipse.jetty.server.handler.gzip GzipHandler)
    (org.eclipse.jetty.websocket.server.config JettyWebSocketServletContainerInitializer JettyWebSocketServletContainerInitializer$Configurator)))
@@ -44,20 +44,15 @@
   [next-handler config]
   ;; Applied bottom-up
   (-> next-handler
-      ;(wrap-dbg :electric-websocket-middleware-4)
       (electric-ring/wrap-electric-websocket (:on-boot-server config)) ; 5. connect electric client
-    ; 4. this is where you would add authentication middleware (after cookie parsing, before Electric starts)
-      ;(wrap-dbg :electric-websocket-middleware-3)
+      ; 4. this is where you would add authentication middleware (after cookie parsing, before Electric starts)
       (cookies/wrap-cookies) ; 3. makes cookies available to Electric app
       (electric-ring/wrap-reject-stale-client config) ; 2. reject stale electric client
-      ;(wrap-dbg :electric-websocket-middleware-2)
       (wrap-params) ; 1. parse query params
-      ;(wrap-dbg :electric-websocket-middleware-1);
-      ;(wrap-dbg-uri);
       ))
 
 (defn get-modules [{:keys [manifest-path js-path]}]
-  (->> (slurp manifest-path)
+  (->> (slurp (io/resource (str "public" manifest-path)))
        (edn/read-string)
        (reduce (fn [r module] (assoc r (keyword "hyperfiddle.client.module" (name (:name module)))
                                      (str js-path \/ (:output-name module)))) {})))
@@ -103,8 +98,8 @@ with target specified by map `m`. Target values are coerced to string with `str`
 information."
   [next-handler config]
   (fn [ring-req]
-    (if-let [response (we :wrap-index-page-response (res/resource-response (we ::wrap-index-page-response-path (str #_(check string? (:resources-path config)) (:index-page config)))))]
-      (if-let [bag (we :wrap-index-page-bag (merge config (get-modules config)))]
+    (if-let [response (res/resource-response (str "public" (:index-page config)))]
+      (if-let [bag (merge config (get-modules config))]
         (-> (res/response (template (slurp (:body response)) bag)) ; TODO cache in prod mode
             (res/content-type "text/html") ; ensure `index.html` is not cached
             (res/header "Cache-Control" "no-store")
@@ -118,16 +113,11 @@ information."
   (-> (res/not-found "Not found")
       (res/content-type "text/plain")))
 
-#_(defn my-wrap-resource [handler]
-  (fn [request]
-    (handler )))
-
 (defn http-middleware [config]
   ;; these compose as functions, so are applied bottom up
   (-> not-found-handler
       (wrap-index-page config) ; 3. otherwise fallback to default page file
-      ;(wrap-resource (:resources-path config)) ; 2. serve static file from classpath 
-      (wrap-resource "") ; 2. serve static file from classpath
+      (wrap-resource "public") ; 2. serve static file from classpath 
       (wrap-content-type) ; 1. detect content (e.g. for index.html)
       ))
 

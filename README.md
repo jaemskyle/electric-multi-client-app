@@ -5,20 +5,20 @@ A minimal Electric Clojure app based on [Electric Starter App](https://github.co
 Instructions are provided on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
 
 ## Under Development!
-See section **STATUS** tags.
+See section *STATUS* tags.
 
 ## Instructions
 
-Dev build: **STATUS: functional**
+Dev build: *STATUS: functional*
 
-* Shell: `npm run watch` **or** `clj -A:dev:app:admin -X dev/-main`, **or** repl: `(dev/-main)`
+* Shell: `npm run watch` *or* `clj -A:dev:app:admin -X dev/-main`, *or* repl: `(dev/-main)`
 * http://localhost:8080
 * Electric root functions:
   * [src-client-app/app/main.cljc](src-client-app/app/main.cljc)
   * [src-admin-app/admin/main.cljc](src-admin-app/admin/main.cljc)
 * Hot code reloading works: edit -> save -> see app reload in browser
 
-Prod build: **STATUS: functional**
+Prod build: *STATUS: functional*
 
 ```shell
 npm run build-prod-client
@@ -32,17 +32,26 @@ clj -X:build:prod:app:admin build-client
 clj -M:prod:app:admin -m server-prod
 ```
 
-Uberjar (optional): **STATUS: under-development**
+Uberjar (optional): *STATUS: functional*
+```shell
+npm run build-uber-jar
+npm run uber-jar
 ```
+
+or
+
+```shell
 clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar
 java -cp target/app.jar clojure.main -m server-prod
 ```
 
-Deployment example: **STATUS: under-development**
+Deployment example: *STATUS: under-development*
 - [Dockerfile](Dockerfile)
 - fly.io deployment through github actions: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) & [fly.toml](fly.toml)
 
-## Integrate it in an existing clojure app **STATUS: under-development**
+## Integrate it in an existing clojure app
+
+*STATUS: under-development*
 
 1. Look at [src-prod/prod.cljc](src-prod/prod.cljc). It contains:
     - server entrypoint

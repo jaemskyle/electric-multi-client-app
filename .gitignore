@@ -12,6 +12,4 @@ node_modules
 /resources/public/admin/js
 /resources/electric-manifest.edn
 /target
-.DS_Store
 /data
-*.zip
