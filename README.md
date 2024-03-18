@@ -34,8 +34,8 @@ clj -M:prod:app:admin -m server-prod
 
 Uberjar (optional): **STATUS: under-development**
 ```
-clj -X:build:prod:app:admin uberjar :build/jar-name "target/app.jar"
-java -cp target/app.jar clojure.main -m prod
+clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar
+java -cp target/app.jar clojure.main -m server-prod
 ```
 
 Deployment example: **STATUS: under-development**

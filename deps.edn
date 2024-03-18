@@ -11,7 +11,7 @@
           ;
            metosin/reitit-ring {:mvn/version "0.7.0-alpha7"};
            }
- :paths   ["src" "resources"]
+ :paths   ["src" #_"resources" "resources/public"]
  :aliases {:app
            {:extra-paths ["src-client-app"]
             :extra-deps {}}

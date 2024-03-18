@@ -7,8 +7,7 @@
    [server.server-jetty :as jetty]
    [hyperfiddle.electric :as e]
    app.main
-   admin.main
-   ))
+   admin.main))
 
 (defmacro compile-time-resource [filename] (some-> filename io/resource slurp edn/read-string))
 
@@ -21,27 +20,20 @@
     ;; The client's version is injected in the compiled .js file.
    (doto (compile-time-resource "electric-manifest.edn") prn)
    {:host "localhost"
-    :port 8080
-    }))
+    :port 8080}))
 
-(def app-config
-  {:resources-path "public"
-   :manifest-path ; contains Electric compiled program's version so client and server stays in sync
-   "public//app/js/manifest.edn"
-   :index-page "/app/index.html"
-   :asset-path "/app/js"
-   :on-boot-server (fn [ring-request]
-                     (e/boot-server {} app.main/Main ring-request))})
+(def app-config {:manifest-path (io/resource "app/js/manifest.edn") ; contains Electric compiled program's version so client and server stays in sync
+                 :index-page "/app/index.html"
+                 :js-path "/app/js";main-fn prefix in index.html
+                 :on-boot-server (fn [ring-request]
+                                   (e/boot-server {} app.main/Main ring-request))})
 
-(def admin-config
-  {:resources-path "public"
-   :manifest-path ; contains Electric compiled program's version so client and server stays in sync
-   "public//admin/js/manifest.edn"
-   :index-page "/admin/index.html"
-   :asset-path "/admin/js"
-   :on-boot-server (fn [ring-request]
-                     (e/boot-server {} admin.main/Main ring-request)); 
-   })
+(def admin-config {:manifest-path (io/resource "app/js/manifest.edn") ; contains Electric compiled program's version so client and server stays in sync
+                   :index-page "/admin/index.html"
+                   :js-path "/admin/js"
+                   :on-boot-server (fn [ring-request]
+                                     (e/boot-server {} admin.main/Main ring-request)); 
+                   })
 
 
 (defn -main [& {:strs [] :as args}] ; clojure.main entrypoint, args are strings

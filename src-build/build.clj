@@ -55,17 +55,14 @@
   (when-not skip-client
     (build-client {:optimize optimize, :debug debug, :verbose verbose}))
 
-  (b/copy-dir {:target-dir class-dir :src-dirs ["src" "src-prod" "resources"]})
+  (b/copy-dir {:target-dir class-dir :src-dirs ["src" "src-prod" "src-client-app" "src-client-admin" "resources"]})
+  ;(b/copy-dir {:target-dir (str class-dir "/resources") :src-dirs ["resources"]})
   (let [jar-name (or (some-> jar-name str) ; override for Dockerfile builds to avoid needing to reconstruct the name
                      (format "target/electricfiddle-%s.jar" electric-user-version))
-        aliases [:prod]]
+        aliases [:prod :app :admin]]
     (log/info `uberjar "included aliases:" aliases)
     (b/uber {:class-dir class-dir
              :uber-file jar-name
              :basis     (b/create-basis {:project "deps.edn" :aliases aliases})})
     (log/info jar-name)))
 
-;; clj -X:build:prod:app:admin build-client
-;; clj -M:prod:app:admin -m server-prod
-;; clj -X:build:prod uberjar :build/jar-name "app.jar"
-;; java -cp app.jar clojure.main -m prod

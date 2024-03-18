@@ -6,9 +6,9 @@
     "watch": "clj -A:dev:app:admin -X server-dev/-main",
     "build-prod-client": "clj -X:build:prod:app:admin build-client",
     "build-prod-server": "clj -M:prod:app:admin -m server-prod",
-    "deps": "clj -A:dev:app:admin -Stree",
-    "build-uber-jar": "clj -X:build:prod uberjar :build/jar-name 'target/app.jar'",
-    "uber-jar": "java -cp target/app.jar clojure.main -m prod"
+    "build-uber-jar": "clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar",
+    "uber-jar": "java -cp target/app.jar clojure.main -m server-prod",
+    "deps": "clj -A:dev:app:admin -Stree"
   },
   "dependencies": {
     "react": "^18.2.0"

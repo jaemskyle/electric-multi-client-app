@@ -2,6 +2,7 @@
   (:require
    app.main
    admin.main
+   [clojure.java.io :as io]
    [hyperfiddle.electric :as e]
    [server.server-jetty :as jetty]
    [shadow.cljs.devtools.api :as shadow]
@@ -16,20 +17,15 @@
 (do
   (def server-config  {:host "localhost"
                        :port 8080})
-
-  (def app-config {:resources-path "public"
-                   :manifest-path ; contains Electric compiled program's version so client and server stays in sync
-                   "public//app/js/manifest.edn"
+  (def app-config {:manifest-path (io/resource "app/js/manifest.edn") ; contains Electric compiled program's version so client and server stays in sync
                    :index-page "/app/index.html"
-                   :asset-path "/app/js"
+                   :js-path "/app/js";main-fn prefix in index.html
                    :on-boot-server (fn [ring-request]
                                      (e/boot-server {} app.main/Main ring-request))})
 
-  (def admin-config {:resources-path "public"
-                     :manifest-path ; contains Electric compiled program's version so client and server stays in sync
-                     "public//admin/js/manifest.edn"
+  (def admin-config {:manifest-path (io/resource "app/js/manifest.edn") ; contains Electric compiled program's version so client and server stays in sync
                      :index-page "/admin/index.html"
-                     :asset-path "/admin/js"
+                     :js-path "/admin/js"
                      :on-boot-server (fn [ring-request]
                                        (e/boot-server {} admin.main/Main ring-request)); 
                      })
@@ -48,6 +44,9 @@
                  admin-config))
 
     (comment
-      (.stop server))))
+      (do
+        (.stop server)
+        (-main)))))
+
 
 

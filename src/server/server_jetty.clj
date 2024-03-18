@@ -2,7 +2,6 @@
   "Electric integrated into a sample ring + jetty app."
   (:require
    [clojure.edn :as edn]
-   [clojure.java.io :as io]
    [clojure.string :as str]
    [clojure.pprint :refer [pprint]]
    [clojure.tools.logging :as log]
@@ -57,12 +56,38 @@
       ;(wrap-dbg-uri);
       ))
 
-(defn get-modules [{:keys [asset-path manifest-path]}]
-  (when-let [manifest (io/resource manifest-path)]
-    (->> (slurp manifest)
-         (edn/read-string)
-         (reduce (fn [r module] (assoc r (keyword "hyperfiddle.client.module" (name (:name module)))
-                                       (str asset-path \/ (:output-name module)))) {}))))
+(defn get-modules [{:keys [manifest-path js-path]}]
+  (->> (slurp manifest-path)
+       (edn/read-string)
+       (reduce (fn [r module] (assoc r (keyword "hyperfiddle.client.module" (name (:name module)))
+                                     (str js-path \/ (:output-name module)))) {})))
+
+(comment
+  ;; = when-let - Example 1 = 
+  
+  ;; Very useful when working with sequences. Capturing the return value 
+  ;; of `seq` brings a performance gain in subsequent `first`/`rest`/`next`
+  ;; calls. Also the block is guarded by `nil` punning.
+  
+  (defn drop-one
+    [coll]
+    (when-let [s (seq coll)]
+      (rest s)))
+  
+  user=> (drop-one [1 2 3])
+  (2 3)
+  user=> (drop-one [])
+  nil
+  
+  ;; See also:
+  clojure.core/if-let
+  clojure.core/when
+  clojure.core/when-not
+  clojure.core/if
+  clojure.core/when-first
+  clojure.core/when-some
+  clojure.core/let
+  :rcf)
 
 (defn template
   "In string template `<div>$:foo/bar$</div>`, replace all instances of $key$
@@ -78,7 +103,7 @@ with target specified by map `m`. Target values are coerced to string with `str`
 information."
   [next-handler config]
   (fn [ring-req]
-    (if-let [response (we :wrap-index-page-response (res/resource-response (str (check string? (:resources-path config)) (:index-page config))))]
+    (if-let [response (we :wrap-index-page-response (res/resource-response (we ::wrap-index-page-response-path (str #_(check string? (:resources-path config)) (:index-page config)))))]
       (if-let [bag (we :wrap-index-page-bag (merge config (get-modules config)))]
         (-> (res/response (template (slurp (:body response)) bag)) ; TODO cache in prod mode
             (res/content-type "text/html") ; ensure `index.html` is not cached
@@ -93,11 +118,16 @@ information."
   (-> (res/not-found "Not found")
       (res/content-type "text/plain")))
 
+#_(defn my-wrap-resource [handler]
+  (fn [request]
+    (handler )))
+
 (defn http-middleware [config]
   ;; these compose as functions, so are applied bottom up
   (-> not-found-handler
       (wrap-index-page config) ; 3. otherwise fallback to default page file
-      (wrap-resource (:resources-path config)) ; 2. serve static file from classpath
+      ;(wrap-resource (:resources-path config)) ; 2. serve static file from classpath 
+      (wrap-resource "") ; 2. serve static file from classpath
       (wrap-content-type) ; 1. detect content (e.g. for index.html)
       ))
 
