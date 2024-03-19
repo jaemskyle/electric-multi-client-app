@@ -8,7 +8,7 @@ COPY .git .git
 COPY shadow-cljs.edn shadow-cljs.edn
 COPY src src
 COPY src-client-app src-client-app
-COPY src-admin-app src-admin-app
+COPY src-client-admin src-client-admin
 COPY src-build src-build
 COPY src-prod src-prod
 COPY resources resources
@@ -16,4 +16,4 @@ COPY node_modules node_modules
 
 RUN clojure -X:build:prod:app:admin uberjar :build/jar-name app.jar
 
-CMD java -cp app.jar clojure.main -m server-prod
+CMD java -cp app.jar clojure.main -m prod
