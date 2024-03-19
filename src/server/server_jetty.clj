@@ -57,33 +57,6 @@
        (reduce (fn [r module] (assoc r (keyword "hyperfiddle.client.module" (name (:name module)))
                                      (str js-path \/ (:output-name module)))) {})))
 
-(comment
-  ;; = when-let - Example 1 = 
-  
-  ;; Very useful when working with sequences. Capturing the return value 
-  ;; of `seq` brings a performance gain in subsequent `first`/`rest`/`next`
-  ;; calls. Also the block is guarded by `nil` punning.
-  
-  (defn drop-one
-    [coll]
-    (when-let [s (seq coll)]
-      (rest s)))
-  
-  user=> (drop-one [1 2 3])
-  (2 3)
-  user=> (drop-one [])
-  nil
-  
-  ;; See also:
-  clojure.core/if-let
-  clojure.core/when
-  clojure.core/when-not
-  clojure.core/if
-  clojure.core/when-first
-  clojure.core/when-some
-  clojure.core/let
-  :rcf)
-
 (defn template
   "In string template `<div>$:foo/bar$</div>`, replace all instances of $key$
 with target specified by map `m`. Target values are coerced to string with `str`.
