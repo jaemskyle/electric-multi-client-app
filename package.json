@@ -5,10 +5,12 @@
   "scripts": {
     "watch": "clj -A:dev:app:admin -X dev/-main",
     "build-prod-client": "clj -X:build:prod:app:admin build-client",
-    "build-prod-server": "clj -M:prod:app:admin -m prod",
-    "build-uber-jar": "clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar",
-    "uber-jar": "java -cp target/app.jar clojure.main -m prod",
-    "deps": "clj -A:dev:app:admin -Stree"
+    "prod-server": "clj -M:prod:app:admin -m prod",
+    "prod": "npm run build-prod-client && npm run prod-server",
+    "build-uber-jar": "clj -X:build:prod:app:admin uberjar :build/jar-name target/electric-multi-client-app.jar",
+    "uber-jar": "java -cp target/electric-multi-client-app.jar clojure.main -m prod",
+    "app-deps": "clj -A:prod:app -Stree",
+    "admin-deps": "clj -A:prod:admin -Stree"
   },
   "dependencies": {
     "react": "^18.2.0"

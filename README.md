@@ -10,8 +10,7 @@ Run builds and execute using the [npm scripts](package.json)
 
 Dev build:
 
-* Shell: `npm run watch` 
-* repl (optional): [`(dev/-main)`](src-dev/dev.cljc)
+* Shell: `npm run watch` *or* Repl: [`(dev/-main)`](src-dev/dev.cljc)
 * http://localhost:8080 and http://localhost:8080/admin
 * Electric root and configuration functions:
   * [src-client-app/app/main.cljc](src-client-app/app/main.cljc)
@@ -22,10 +21,16 @@ Prod build:
 
 ```shell
 npm run build-prod-client
-npm run build-prod-server
+npm run prod-server
 ```
 
-Uberjar (optional):
+*or to run both in sequence:*
+
+```shell
+npm run prod
+```
+
+Uberjar:
 
 ```shell
 npm run build-uber-jar
