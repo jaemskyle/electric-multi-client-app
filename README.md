@@ -4,61 +4,47 @@ A minimal Electric Clojure app based on [Electric Starter App](https://github.co
 
 Instructions are provided on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
 
-## Under Development!
-See section *STATUS* tags.
-
 ## Instructions
 
-Dev build: *STATUS: functional*
+Run builds and execute using the [npm scripts](package.json)
 
-* Shell: `npm run watch` *or* `clj -A:dev:app:admin -X dev/-main`, *or* repl: `(dev/-main)`
-* http://localhost:8080
-* Electric root functions:
+Dev build:
+
+* Shell: `npm run watch` 
+* repl (optional): [`(dev/-main)`](src-dev/dev.cljc)
+* http://localhost:8080 and http://localhost:8080/admin
+* Electric root and configuration functions:
   * [src-client-app/app/main.cljc](src-client-app/app/main.cljc)
   * [src-admin-app/admin/main.cljc](src-admin-app/admin/main.cljc)
 * Hot code reloading works: edit -> save -> see app reload in browser
 
-Prod build: *STATUS: functional*
+Prod build:
 
 ```shell
 npm run build-prod-client
 npm run build-prod-server
 ```
 
-**or**
+Uberjar (optional):
 
-```shell
-clj -X:build:prod:app:admin build-client
-clj -M:prod:app:admin -m server-prod
-```
-
-Uberjar (optional): *STATUS: functional*
 ```shell
 npm run build-uber-jar
 npm run uber-jar
 ```
 
-or
-
-```shell
-clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar
-java -cp target/app.jar clojure.main -m server-prod
-```
-
-Deployment example: *STATUS: under-development*
+Deployment example:
 - [Dockerfile](Dockerfile)
 - fly.io deployment through github actions: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) & [fly.toml](fly.toml)
 
 ## Integrate it in an existing clojure app
 
-*STATUS: under-development*
-
 1. Look at [src-prod/prod.cljc](src-prod/prod.cljc). It contains:
     - server entrypoint
     - client entrypoint
     - necessary configuration
-2. Look at [src/electric_starter_app/server_jetty.clj](src/electric_starter_app/server_jetty.clj). It contains:
+2. Look at [src/server/server_jetty.clj](src/server/server_jetty.clj). It contains:
    - an example Jetty integration
+   - routing
    - required ring middlewares
 
 ## Build documentation
@@ -71,6 +57,6 @@ Electric Clojure programs compile down to separate client and server target prog
   * client Electric app version is baked into the .js artifact as `hyperfiddle.electric-client/ELECTRIC_USER_VERSION`
 
 Consequently, you need **robust cache invalidation** in prod!
-  * In this example, complied js files are fingerprinted with their respective hash, to ensure a new release properly invalidates asset caches. [index.html](resources/public/electric_starter_app/index.html) is templated with the generated js file name.
-  * The generated name comes from shadow-cljs's `manifest.edn` file (in `resources/public/electric_starter_app/js/manifest.edn`), produced by `clj -X:build:prod build-client`. Watch out: this shadow-cljs compilation manifest is not the same manifest as `electric-manifest.edn`!
-  * Notice that [src/electric_starter_app/server_jetty.clj](src/electric_starter_app/server_jetty.clj) -> `wrap-index-page` reads `:manifest-path` from config. The config comes from [src-prod/prod.cljc](src-prod/prod.cljc).
+  * In this example, complied js files are fingerprinted with their respective hash, to ensure a new release properly invalidates asset caches. [index.html](resources/public/app/index.html) is templated with the generated js file name.
+  * The generated name comes from shadow-cljs's `manifest.edn` file (in `resources/public/app/js/manifest.edn`), produced by `clj -X:build:prod build-client`. Watch out: this shadow-cljs compilation manifest is not the same manifest as `electric-manifest.edn`!
+  * Notice that [src/server/server_jetty.clj](src/server/server_jetty.clj) -> `wrap-index-page` reads `:manifest-path` from config. The config comes from [src-prod/prod.cljc](src-prod/prod.cljc).
