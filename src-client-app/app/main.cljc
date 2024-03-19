@@ -13,6 +13,9 @@
                subs/db db]
        (views/Root.)))))
 
+#?(:cljs
+   (def entrypoint (e/boot-client {} Main nil)))
+
 #?(:clj
    (def config {:manifest-path "/app/js/manifest.edn" ; contains Electric compiled program's version so client and server stays in sync
                 :index-page "/app/index.html"

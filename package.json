@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "watch": "clj -A:dev:app:admin -X server-dev/-main",
+    "watch": "clj -A:dev:app:admin -X dev/-main",
     "build-prod-client": "clj -X:build:prod:app:admin build-client",
-    "build-prod-server": "clj -M:prod:app:admin -m server-prod",
+    "build-prod-server": "clj -M:prod:app:admin -m prod",
     "build-uber-jar": "clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar",
     "uber-jar": "java -cp target/app.jar clojure.main -m server-prod",
     "deps": "clj -A:dev:app:admin -Stree"
