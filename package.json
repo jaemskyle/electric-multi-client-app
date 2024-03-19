@@ -7,7 +7,7 @@
     "build-prod-client": "clj -X:build:prod:app:admin build-client",
     "build-prod-server": "clj -M:prod:app:admin -m prod",
     "build-uber-jar": "clj -X:build:prod:app:admin uberjar :build/jar-name target/app.jar",
-    "uber-jar": "java -cp target/app.jar clojure.main -m server-prod",
+    "uber-jar": "java -cp target/app.jar clojure.main -m prod",
     "deps": "clj -A:dev:app:admin -Stree"
   },
   "dependencies": {
