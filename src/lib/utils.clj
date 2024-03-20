@@ -11,3 +11,6 @@
            ;; Convert to an Instant for the UTC timestamp
         utc-instant (.toInstant local-date-time)]
     utc-instant))
+
+(defn today-start-time []
+  (utc-for-time-of 5 0))

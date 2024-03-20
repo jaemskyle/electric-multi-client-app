@@ -13,7 +13,7 @@
     "admin-deps": "clj -A:prod:admin -Stree"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "localforage": "^1.10.0"
   },
   "devDependencies": {
     "shadow-cljs": "^2.20.16"

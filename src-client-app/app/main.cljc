@@ -8,10 +8,17 @@
 (e/defn Main [ring-request]
   (e/server
    (xtlib/start-xtdb!)
-   (let [db (new (xtlib/latest-db> @xtlib/!xtdb))]
+   (let [db (new (xtlib/latest-db> @xtlib/!xtdb))
+         user-key (e/client (events/Watch$. (events/$user-key)))]
      (binding [events/db db
-               subs/db db]
-       (views/Root.)))))
+               subs/db db
+               events/user-key user-key
+               subs/user-key user-key]
+       (when user-key
+         (e/client
+          (binding [events/user-key user-key
+                    subs/user-key user-key]
+            (views/Root.))))))))
 
 #?(:cljs
    (def entrypoint (e/boot-client {} Main nil)))

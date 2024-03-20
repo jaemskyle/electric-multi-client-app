@@ -30,9 +30,10 @@
 
 (e/defn Root []
   (e/client
-   (let [!data (atom {})
+   (let [!data (atom (e/server (subs/Person.)))
          ;watch !data so capitalized inputs are immediately displayed
-         {:keys [person/first-name person/last-name]} (e/watch !data)]
+         {:keys [person/first-name person/last-name]} (e/watch !data)
+         signed-in? (e/server (subs/Signed-in?.))]
      (binding [d/node js/document.body]
        (d/div
         (d/props {:class "mdl-card mdl-shadow--2dp"
@@ -43,27 +44,33 @@
          (d/h2
           (d/props {:class "mdl-card__title-text"})
           (d/text "App client")))
-        (d/p
-         (d/text "add a name:"))
-        (d/div
-         (d/props {:class "mdl-textfield mdl-js-textfield"})
-         (Input. "first-name"
-                 {:value first-name
-                  :On-input (e/fn [text]
-                              (swap! !data assoc
-                                     :person/first-name (-> text capitalize-words not-empty)))})
-         (Input. "last-name"
-                 {:value last-name
-                  :On-input (e/fn [text]
-                              (swap! !data assoc
-                                     :person/last-name (-> text capitalize-words not-empty)))}))
-        (d/div
-         (d/props {:class "mdl-card__actions mdl-card--border"
-                   :style {:display :flex :align-items :center}})
-         (Button. "Add-name" {:On-click (e/fn [_]
-                                          (events/On-add-person. @!data)
-                                          (swap! !data dissoc :person/first-name :person/last-name))
-                              :disabled (not (and first-name last-name))})
-         (d/br)
-         (Button. "Dump-db" {:On-click events/On-dump-db})))))))
+        (if signed-in?
+          (d/div
+           (d/props {:class "mdl-card__actions mdl-card--border"
+                     :style {:display :flex :align-items :center}})
+           (Button. "Sign-out" {:On-click (e/fn [_] (events/On-sign-out.))})
+           (d/br)
+           (Button. "Dump-db" {:On-click events/On-dump-db}))
+          (d/div
+           (d/text "Please sign in:") (d/br)
+           (d/text "(sign in a different person from another browser)")
+           (d/div
+            (d/props {:class "mdl-textfield mdl-js-textfield"})
+            (Input. "first-name"
+                    {:value first-name
+                     :On-input (e/fn [text]
+                                 (swap! !data assoc
+                                        :person/first-name (-> text capitalize-words not-empty)))})
+            (Input. "last-name"
+                    {:value last-name
+                     :On-input (e/fn [text]
+                                 (swap! !data assoc
+                                        :person/last-name (-> text capitalize-words not-empty)))}))
+           (d/div
+            (d/props {:class "mdl-card__actions mdl-card--border"
+                      :style {:display :flex :align-items :center}})
+            (Button. "Sign-in" {:On-click (e/fn [_] (events/On-sign-in. @!data))
+                                :disabled (not (and first-name last-name))})
+            (d/br)
+            (Button. "Dump-db" {:On-click events/On-dump-db})))))))))
 
