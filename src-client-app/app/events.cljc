@@ -54,10 +54,6 @@
                                  (let [n (k new-data)]
                                    (when (not= n (k data))
                                      [k n]))) (keys new-data)))]
-       (e/client
-        (pprint {:data data
-                 :new-data new-data
-                 :changes user-changes}))
        (when user-changes
          ;Always put full entity; missing attrs are removed when overwriting
          (xt/submit-tx @xtlib/!xtdb
@@ -71,18 +67,6 @@
                         :event/person user-eid
                         :event/timestamp (Instant/now);
                         }]])))))
-
-#_(e/defn On-add-person [{:as data}]
-  (e/server
-   ;filter invalid attrs
-   (let [data (select-keys data subs/person-keys)]
-     (xt/sync @xtlib/!xtdb)
-     ;:xt/id is the entity-id
-     (xt/submit-tx @xtlib/!xtdb
-                   [[:xtdb.api/put
-                     (assoc data
-                            :xt/id (random-uuid)
-                            :person/timestamp (Instant/now))]]))))
 
 (e/defn On-dump-db [_]
   (e/server
