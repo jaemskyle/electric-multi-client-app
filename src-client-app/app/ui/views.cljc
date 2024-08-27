@@ -39,7 +39,6 @@
         [:div.mdl-card.mdl-shadow--2dp
          [:div.mdl-card__title
           [:h2.mdl-card__title-text "App client"]]
-         (eval '(prn :eval-2 (+ 1 1)))
          (if signed-in?
            #electric-hiccup
             [:div.mdl-card__actions.mdl-card--border {:style {:display :flex :align-items :center}}
