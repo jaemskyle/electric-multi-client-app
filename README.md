@@ -4,6 +4,19 @@ A minimal Electric Clojure app based on [Electric Starter App](https://github.co
 
 Instructions are provided on how to integrate it into an existing app. For more demos and examples, see [Electric Fiddle](https://github.com/hyperfiddle/electric-fiddle).
 
+### Status
+
+This project is being migrated to use [tailwindcss] and [daisyUI]. These are currently only integrated into the "Dev build".
+
+### HTML Styling
+This project uses [tailwindcss] and [daisyUI] for HTML styling in [app/views.cljc] and [admin/views.cljc].
+I've included [settings](/.vscode/settings.json) for the [Tailwind CSS IntelliSense] plugin for VSCode to provide class autocomplete and tooltip css definitions for electric-hiccup. If you are using VSCode install the plugin to enable the features.
+
+For more styling information see:
+* [tailwindcss-cheatsheet]
+* [daisyUI components]
+* [electric-hiccup]
+
 ## Instructions
 
 Run builds and execute using the [npm scripts](package.json)
@@ -66,3 +79,12 @@ Consequently, you need **robust cache invalidation** in prod!
   * The generated name comes from shadow-cljs's `manifest.edn` file (in `resources/public/*/js/manifest.edn`). Watch out: this shadow-cljs compilation manifest is not the same manifest as `electric-manifest.edn`!
   * Notice that [src/server/server_jetty.clj](src/server/server_jetty.clj) -> `wrap-index-page` reads `:manifest-path` from config. The config comes from [src-prod/prod.cljc](src-prod/prod.cljc).
   * [src/server/server_jetty.clj](src/server/server_jetty.clj) also provides the uri router to server up the clients.
+
+  [app/views.cljc]: src-client-app\app\ui\views.cljc
+  [admin/views.cljc]: src-client-admin\admin\ui\views.cljc
+  [tailwindcss]: https://tailwindcss.com/
+  [daisyUI]: https://daisyui.com/
+  [Tailwind CSS IntelliSense]: https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss
+  [electric-hiccup]:https://github.com/milelo/electric-hiccup
+  [daisyUI components]: https://daisyui.com/components/
+  [tailwindcss-cheatsheet]: https://tailwindcsscheatsheet.com/
