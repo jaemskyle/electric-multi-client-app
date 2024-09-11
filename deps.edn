@@ -11,8 +11,8 @@
           ;
            metosin/reitit-ring {:mvn/version "0.7.0-alpha7"}
            milelo/electric-hiccup {:git/url "https://github.com/milelo/electric-hiccup"
-                                   :git/tag "v0.2.1-alpha"
-                                   :git/sha "78fee86"}
+                                   :git/tag "v0.4.0-alpha"
+                                   :git/sha "f29103a"}
            ;
            }
  :paths   ["src" "resources"]

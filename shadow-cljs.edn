@@ -7,7 +7,9 @@
  {:app-dev  {:deps {:aliases [:app]}
                  :target :browser
                  :devtools {:loader-mode :default
-                            :repl-pprint true}
+                            :repl-pprint true
+                            :watch-dir "resources/public" ;only works on root dir
+                            }
                  :output-dir "resources/public/app/js"
                  :asset-path "/app/js"
                  :modules {:main {:entries [dev] :init-fn dev/start-app!}}
@@ -20,7 +22,9 @@
   :admin-dev  {:deps {:aliases [:admin]}
                :target :browser
                :devtools {:loader-mode :default
-                          :repl-pprint true}
+                          :repl-pprint true
+                          :watch-dir "resources/public" ;only works on root dir
+                          }
                :output-dir "resources/public/admin/js"
                :asset-path "/admin/js"
                :modules {:main {:entries [dev] :init-fn dev/start-admin!}}

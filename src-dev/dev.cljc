@@ -3,7 +3,7 @@
    app.main
    admin.main
    #?(:clj [server.server-jetty :as jetty])
-   #?(:clj [shadow.cljs.devtools.api :as shadow])
+   #?(:clj [shadow.cljs.devtools.api :as shadow-api])
    #?(:clj [shadow.cljs.devtools.server :as shadow-server])
    #?(:clj [clojure.tools.logging :as log])))
 
@@ -19,8 +19,8 @@
        (log/info "Starting Electric compiler and server...")
 
        (shadow-server/start!)
-       (shadow/watch :app-dev)
-       (shadow/watch :admin-dev)
+       (shadow-api/watch :app-dev)
+       (shadow-api/watch :admin-dev)
        (comment (shadow-server/stop!))
 
        (def server (jetty/start-server!
