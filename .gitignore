@@ -6,6 +6,7 @@
 !.gitignore
 !.cljfmt.edn
 !.clj-kondo
+!.vscode
 .clj-kondo/.cache
 node_modules
 /resources/public/app/js

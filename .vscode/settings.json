@@ -1,0 +1,23 @@
+{
+  "clojure.trace.server": "messages",
+  "tailwindCSS.includeLanguages": {
+    "clojure": "",
+    "clojurescript": ""
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.validate": true,
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "\\[:[^.\\s]*((?:\\.[^.\\s\\]]*)+)[\\s\\]]",
+      "\\.([^.]*)"
+    ],
+    [
+      "\\:class\\s+(\\:[^\\s\\}]*)[\\s\\}]",
+      "[\\:.]([^.]*)"
+    ],
+    [
+      "\\:class\\s+([\"][^\\}\"]*)[\"]",
+      "[\"\\s]([^\\s\"]*)"
+    ]
+  ],
+}
