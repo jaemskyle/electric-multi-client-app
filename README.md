@@ -80,8 +80,8 @@ Consequently, you need **robust cache invalidation** in prod!
   * Notice that [src/server/server_jetty.clj](src/server/server_jetty.clj) -> `wrap-index-page` reads `:manifest-path` from config. The config comes from [src-prod/prod.cljc](src-prod/prod.cljc).
   * [src/server/server_jetty.clj](src/server/server_jetty.clj) also provides the uri router to server up the clients.
 
-  [app/views.cljc]: src-client-app\app\ui\views.cljc
-  [admin/views.cljc]: src-client-admin\admin\ui\views.cljc
+  [app/views.cljc]: /src-client-app/app/ui/views.cljc
+  [admin/views.cljc]: /src-client-admin/admin/ui/views.cljc
   [tailwindcss]: https://tailwindcss.com/
   [daisyUI]: https://daisyui.com/
   [Tailwind CSS IntelliSense]: https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss
