@@ -10,7 +10,9 @@
 .clj-kondo/.cache
 node_modules
 /resources/public/app/js
+/resources/public/app/css/main.css
 /resources/public/admin/js
+/resources/public/admin/css/main.css
 /resources/electric-manifest.edn
 /target
 /data
